@@ -31,6 +31,7 @@ async function postData(prompt) {
     }),
   });
   const result = await response.json();
+  console.log(result);
   return result.choices[0].text.trim();
 }
 module.exports = app
