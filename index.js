@@ -8,6 +8,7 @@ app.use(express.json())    // <==== parse request body as JSON
 
 
 app.post('/',(req,res)=>{
+  console.log(req)
   postData(req.body.prompt).then((data) => {res.send(data)})
 })
 
@@ -32,6 +33,7 @@ async function postData(prompt) {
   });
   const result = await response.json();
   console.log(result);
+  console.log(error);
   return result.choices[0].text.trim();
 }
 module.exports = app
