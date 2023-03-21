@@ -33,7 +33,6 @@ async function postData(prompt) {
   });
   const result = await response.json();
   console.log(result);
-  console.log(error);
   return result.choices[0].text.trim();
 }
 module.exports = app
