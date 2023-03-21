@@ -1,7 +1,7 @@
 const express = require('express')
 const app = express()
 const port = 3000
-const token = ''
+const token = process.env.TOKEN
 app.use(express.json())    // <==== parse request body as JSON
 
 
