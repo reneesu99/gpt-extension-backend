@@ -9,14 +9,14 @@ app.use(express.json())    // <==== parse request body as JSON
 
 app.post('/',(req,res)=>{
   console.log(req)
-  postData(req.body.prompt).then((data) => {res.send(data)})
+  postData(req.body.prompt, res).then((data) => {res.send(data)})
 })
 
 app.listen(port, () => {
   console.log(`Example app listening on port http://localhost:${port}/`)
 })
 
-async function postData(prompt) {
+async function postData(prompt,res) {
   
   const input = prompt;
   const response = await fetch("https://api.openai.com/v1/completions", {
@@ -34,8 +34,9 @@ async function postData(prompt) {
   const result = await response.json();
   console.log(result);
   if (result.error) {
-    return {status: 500,
-            error: result.error};
+    res.status = 500;
+
+    return result.error;
   }
   else
   {
