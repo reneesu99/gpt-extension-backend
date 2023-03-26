@@ -1,7 +1,7 @@
 const express = require('express')
 const app = express()
 const port = 3000
-const token = "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"
+const token = process.env.TOKEN
 app.use(express.json())    // <==== parse request body as JSON
 // 3000 words should be max 
 
@@ -36,7 +36,7 @@ async function postData(prompt,res) {
   if (result.error) {
     res.status = 500;
 
-    return result.error;
+    return result.error.message;
   }
   else
   {
