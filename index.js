@@ -1,7 +1,7 @@
 const express = require('express')
 const app = express()
 const port = 3000
-const token = process.env.TOKEN
+const token = process.env.TOKEN;
 app.use(express.json())    // <==== parse request body as JSON
 // 3000 words should be max 
 
@@ -9,7 +9,7 @@ app.use(express.json())    // <==== parse request body as JSON
 
 app.post('/',(req,res)=>{
   console.log(req)
-  postData(req.body.prompt, res).then((data) => {res.send(data)})
+  postData(req.body.prompt, res).then((data) => {res.status(data.status).send(data.message)})
 })
 
 app.listen(port, () => {
@@ -34,13 +34,11 @@ async function postData(prompt,res) {
   const result = await response.json();
   console.log(result);
   if (result.error) {
-    res.status = 500;
-
-    return result.error.message;
+    return {status:500, message: result.error.message};
   }
   else
   {
-    return result.choices[0].text.trim();
+    return {status:200, message: result.choices[0].text.trim()};
   }
 }
 module.exports = app
